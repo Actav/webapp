@@ -18,6 +18,7 @@ func (s *server) Routes() {
 // handleIndex обрабатывает запросы на главную страницу.
 func (s *server) handleIndex(w http.ResponseWriter, r *http.Request) {
 	data := PageData{Title: "Главная страница"}
+
 	// Логирование запроса
 	s.logger.Printf("Запрос на главную страницу от %s", r.RemoteAddr)
 	// Выполняем шаблон "layout", внутри которого определён блок "content"

@@ -1,7 +1,6 @@
 package server
 
 import (
-	"log"
 	"myapp/logger" // Импортируем пакет логирования
 	"net/http"
 )
@@ -27,23 +26,24 @@ type server struct {
 // NewServer создаёт новый сервер, используя рендерер шаблонов, загруженный из директории templateDir.
 func NewServer(templateDir, logFile string) (Server, error) {
 	// Создаём логгер
-	logger, err := logger.NewLogger(logFile)
+	l, err := logger.NewLogger(logFile)
 	if err != nil {
 		return nil, err
 	}
 
 	// Создаём рендерер шаблонов
-	renderer, err := NewRenderer(templateDir)
+	r, err := NewRenderer(templateDir)
 	if err != nil {
 		return nil, err
 	}
 
 	// Создаём сервер
 	mux := http.NewServeMux()
+
 	s := &server{
 		mux:      mux,
-		renderer: renderer,
-		logger:   logger,
+		renderer: r,
+		logger:   l,
 	}
 
 	// Регистрируем маршруты
@@ -56,5 +56,6 @@ func NewServer(templateDir, logFile string) (Server, error) {
 func (s *server) Start(addr string) error {
 	// Логируем запуск сервера
 	s.logger.Printf("Сервер запущен на %s", addr)
+
 	return http.ListenAndServe(addr, s.mux)
 }

@@ -2,7 +2,6 @@ package server
 
 import (
 	"html/template"
-	"log"
 	"net/http"
 	"path/filepath"
 )
@@ -19,11 +18,12 @@ type renderer struct {
 
 // NewRenderer создаёт новый рендерер, парся все файлы с расширением .html из указанной директории.
 func NewRenderer(templateDir string) (TemplateRenderer, error) {
-	pattern := filepath.Join(templateDir, "*.html")
+	pattern := filepath.Join(templateDir, "*.gohtml")
 	tmpl, err := template.ParseGlob(pattern)
 	if err != nil {
 		return nil, err
 	}
+
 	return &renderer{tmpl: tmpl}, nil
 }
 

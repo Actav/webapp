@@ -21,5 +21,6 @@ func NewLogger(logFile string) (*Logger, error) {
 
 	// Создание логера, который будет писать как в файл, так и в консоль.
 	logger := log.New(file, "LOG: ", log.Ldate|log.Ltime|log.Lshortfile)
+
 	return &Logger{logger}, nil
 }
